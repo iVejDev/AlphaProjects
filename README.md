@@ -47,7 +47,7 @@ A modern project management application built with ASP.NET Core MVC where users 
  ## 📷 Screenshots
 
 ### Project Dashboard
-![Project Dashboard]ProjectManagement/wwwroot/images/project-dashboard.png)
+![Project Dashboard](ProjectManagement/wwwroot/images/project-dashboard.png)
 
 ### Add Projects
 ![Add Projects](ProjectManagement/wwwroot/images/Addproject.png)
