@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Project Management</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ProjectManagement.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+    <div class="layout-container">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <a asp-controller="Project" asp-action="Index" class="logo">
+                        <img src="~/images/Logo.svg" alt="Alpha Logo" />
+                        <span>alpha</span>
+                    </a>
+                </div>
+                <div class="sidebar-menu">
+                    <a asp-controller="Project" asp-action="Index" class="menu-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Project" ? "active" : "")">
+                        <i class="fas fa-project-diagram"></i>
+                        <span>Projects</span>
+                    </a>
+                </div>
+            </div>
+        }
+
+        <div class="main-content">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <header class="main-header">
+                    <div class="user-menu">
+                        <div class="user-avatar" id="avatar-dropdown-toggle">
+                            <img src="~/images/user-avatar.png" alt="User Avatar" />
+                        </div>
+                        <div class="dropdown-menu" id="avatar-dropdown-menu">
+                            <div class="dropdown-header">
+                                <span id="user-fullname">@User.Identity.Name</span>
+                            </div>
+                            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Content("~/")" method="post">
+                                <button type="submit" class="dropdown-item">
+                                    <i class="fas fa-sign-out-alt"></i> Logout
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </header>
+            }
+
+            <main role="main">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

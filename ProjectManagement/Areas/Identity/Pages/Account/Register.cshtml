@@ -1,0 +1,78 @@
+﻿@page
+@model RegisterModel
+
+@{
+    ViewData["Title"] = "Create Account";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Project Management</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/auth.css" asp-append-version="true" />
+</head>
+<body class="auth-body">
+    <div class="auth-container">
+        <div class="auth-form-container">
+            <h1 class="auth-title">Create Account</h1>
+
+            <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="auth-form">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input asp-for="Input.FullName" class="form-control" placeholder="Your full name" autocomplete="name" />
+                    <span asp-validation-for="Input.FullName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input asp-for="Input.Email" class="form-control" placeholder="Your email address" autocomplete="username" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <input asp-for="Input.Password" class="form-control" placeholder="Enter your password" autocomplete="new-password" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input asp-for="Input.ConfirmPassword" class="form-control" placeholder="Confirm your password" autocomplete="new-password" />
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label class="terms-checkbox">
+                            <input asp-for="Input.AcceptTerms" />
+                            I accept <a href="#" class="terms-link">Terms and Conditions</a>
+                        </label>
+                        <span asp-validation-for="Input.AcceptTerms" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button id="registerSubmit" type="submit" class="btn btn-primary btn-block">Create Account</button>
+                </div>
+            </form>
+
+            <div class="auth-footer">
+                <p>Already have an account? <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Login</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/auth-validation.js"></script>
+</body>
+</html>
