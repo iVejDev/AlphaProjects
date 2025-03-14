@@ -1,10 +1,10 @@
-# ??? Project Management System
+﻿# 🅰️ Project Management System
 
 ![.NET Core](https://img.shields.io/badge/.NET-8.0-512BD4?style=flat-square&logo=dotnet) ![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square) ![EF Core](https://img.shields.io/badge/EF_Core-8.0-AA00FF?style=flat-square)
 
 A modern project management application built with ASP.NET Core MVC where users can create, manage, and track projects in a simple and efficient way.
 
-## ?? Features
+## 📋 Features
 
 - **User authentication and account management**
   - Register new user accounts
@@ -28,7 +28,7 @@ A modern project management application built with ASP.NET Core MVC where users 
   - Responsive design for various screen sizes
   - Intuitive project cards with status indicators
 
-## ?? Technologies
+## 🧰 Technologies
 
 - **Backend**
   - ASP.NET Core 8.0 MVC
@@ -44,15 +44,15 @@ A modern project management application built with ASP.NET Core MVC where users 
   - CSS3 for custom styling
   - Responsive design
 
- ## ?? Screenshots
+ ## 📷 Screenshots
 
 ### Project Dashboard
-![Project Dashboard](wwwroot/images/project-dashboard.png)
+![Project Dashboard]ProjectManagement/wwwroot/images/project-dashboard.png)
 
 ### Add Projects
-![Add Projects](wwwroot/images/Addproject.png)
+![Add Projects](ProjectManagement/wwwroot/images/Addproject.png)
 
-## ?? Getting Started
+## 🚀 Getting Started
 
 1. Clone the repository
 2. Open the solution in Visual Studio 2022
@@ -68,7 +68,7 @@ A modern project management application built with ASP.NET Core MVC where users 
    - Email: test@example.com
    - Password: Test123!
 
-## ?? Screenshots
+## 📷 Screenshots
 
 - Login screen
 - Project dashboard
@@ -77,6 +77,6 @@ A modern project management application built with ASP.NET Core MVC where users 
 
 
 
-## ????? Author
+## 🧑‍💻 Author
 
 Created as part of a course project for ASP.NET MVC development.
