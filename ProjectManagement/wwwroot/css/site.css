@@ -391,17 +391,17 @@ main {
 .project-icon {
     width: 50px;
     height: 50px;
+    background: linear-gradient(135deg, #FF6B6B, #556270);
     border-radius: var(--radius-md);
     overflow: hidden;
-    background: linear-gradient(135deg, #FF6B6B, #556270);
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
     .project-icon img {
-        width: 30px;
-        height: 30px;
+        width: 56px;
+        height: 56px;
     }
 
 .options-btn {
@@ -454,8 +454,8 @@ main {
 }
 
     .project-icon-preview img {
-        width: 50px;
-        height: 50px;
+        width: 83px;
+        height: 83px;
     }
 
 @media (max-width: 768px) {
