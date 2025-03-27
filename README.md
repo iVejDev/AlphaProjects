@@ -68,14 +68,6 @@ A modern project management application built with ASP.NET Core MVC where users 
    - Email: test@example.com
    - Password: Test123!
 
-## 📷 Screenshots
-
-- Login screen
-- Project dashboard
-- Add/Edit project modal
-- Project listing with filter tabs
-
-
 
 ## 🧑‍💻 Author
 
