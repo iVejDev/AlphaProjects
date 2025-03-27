@@ -33,19 +33,37 @@
             @if (User.Identity.IsAuthenticated)
             {
                 <header class="main-header">
-                    <div class="user-menu">
-                        <div class="user-avatar" id="avatar-dropdown-toggle">
-                            <img src="~/images/user-avatar.png" alt="User Avatar" />
-                        </div>
-                        <div class="dropdown-menu" id="avatar-dropdown-menu">
-                            <div class="dropdown-header">
-                                <span id="user-fullname">@User.Identity.Name</span>
+                    <!-- Search bar -->
+                    <div class="search-bar">
+                        <input type="text" class="search-input" placeholder="Search anything..." />
+                    </div>
+
+                    <div class="header-controls">
+                        <!-- Theme toggle button -->
+                        <button type="button" class="theme-toggle" id="theme-toggle" title="Toggle dark/light mode">
+                            <i class="fas fa-moon"></i>
+                        </button>
+
+                        <!-- Notifications button -->
+                        <button type="button" class="notification-btn">
+                            <i class="fas fa-bell"></i>
+                        </button>
+
+                        <!-- User menu -->
+                        <div class="user-menu">
+                            <div class="user-avatar" id="avatar-dropdown-toggle">
+                                <img src="~/images/user-avatar.png" alt="User Avatar" />
                             </div>
-                            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Content("~/")" method="post">
-                                <button type="submit" class="dropdown-item">
-                                    <i class="fas fa-sign-out-alt"></i> Logout
-                                </button>
-                            </form>
+                            <div class="dropdown-menu" id="avatar-dropdown-menu">
+                                <div class="dropdown-header">
+                                    <span id="user-fullname">@User.Identity.Name</span>
+                                </div>
+                                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Content("~/")" method="post">
+                                    <button type="submit" class="dropdown-item">
+                                        <i class="fas fa-sign-out-alt"></i> Logout
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </header>
@@ -60,6 +78,8 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <!-- Theme toggle script -->
+    <script src="~/js/theme.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

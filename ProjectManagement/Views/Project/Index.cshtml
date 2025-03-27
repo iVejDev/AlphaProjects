@@ -39,12 +39,17 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
-                                    <button class="dropdown-item edit-project-btn" data-project-id="@project.Id">
+                                    <button class="dropdown-item edit-project-btn dropdown-item edit" data-project-id="@project.Id">
                                         <i class="fas fa-edit"></i> Edit
                                     </button>
                                 </li>
                                 <li>
-                                    <button class="dropdown-item delete-project-btn" data-project-id="@project.Id" data-project-name="@project.Name">
+                                    <button class="dropdown-item add-member-btn dropdown-item add-member" data-project-id="@project.Id">
+                                        <i class="fas fa-user-plus"></i> Add Member
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item delete-project-btn dropdown-item delete" data-project-id="@project.Id" data-project-name="@project.Name">
                                         <i class="fas fa-trash-alt"></i> Delete Project
                                     </button>
                                 </li>
@@ -55,6 +60,33 @@
                         <h3 class="project-name">@project.Name</h3>
                         <p class="project-client">@project.ClientName</p>
                         <p class="project-description">@project.Description</p>
+                    </div>
+                    <div class="project-card-footer">
+                        <!-- Time remaining indicator -->
+                        <div class="time-indicator @(project.IsCloseToDeadline ? "warning" : "")">
+                            <i class="fas fa-clock"></i>
+                            @project.TimeRemainingText
+                        </div>
+
+                        <!-- Project members -->
+                        <div class="project-members">
+                            @if (project.Members != null && project.Members.Any())
+                            {
+                                foreach (var member in project.Members.Take(3))
+                                {
+                                    <div class="member-avatar" title="@member.User?.UserName">
+                                        <img src="~/images/user-avatar.png" alt="Member" />
+                                    </div>
+                                }
+
+                                @if (project.Members.Count > 3)
+                                {
+                                    <div class="member-avatar" title="@(project.Members.Count - 3) more">
+                                        <div class="more-members">+@(project.Members.Count - 3)</div>
+                                    </div>
+                                }
+                            }
+                        </div>
                     </div>
                 </div>
             }
@@ -79,8 +111,14 @@
             <div class="modal-body">
                 <form id="addProjectForm" asp-action="Create" method="post">
                     @Html.AntiForgeryToken()
+
                     <div class="project-icon-preview">
                         <img src="~/images/A-icon.svg" alt="Project Icon" />
+                        <!-- Image upload button -->
+                        <button type="button" class="image-upload-btn" id="uploadImageBtn">
+                            <i class="fas fa-camera"></i>
+                        </button>
+                        <input type="file" id="projectImage" name="ProjectImage" class="d-none" accept="image/*" />
                     </div>
 
                     <div class="form-group">
@@ -118,6 +156,23 @@
                         </div>
                     </div>
 
+                    <!-- Members selection -->
+                    <div class="form-group members-container">
+                        <label for="Members">Members</label>
+                        <div class="selected-members" id="selectedMembers">
+                            <!-- Members will be added here dynamically -->
+                        </div>
+                        <div class="input-group">
+                            <select id="memberSelect" class="form-control">
+                                <option value="">Select members to add...</option>
+                                <!-- Member options will be populated by JavaScript -->
+                            </select>
+                            <button type="button" class="btn btn-outline-primary" id="addMemberBtn">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <label for="Budget">Budget</label>
                         <div class="input-group">
@@ -152,6 +207,11 @@
 
                     <div class="project-icon-preview">
                         <img src="~/images/A-icon.svg" alt="Project Icon" />
+                        <!-- Image upload button for edit -->
+                        <button type="button" class="image-upload-btn" id="editUploadImageBtn">
+                            <i class="fas fa-camera"></i>
+                        </button>
+                        <input type="file" id="editProjectImage" name="ProjectImage" class="d-none" accept="image/*" />
                     </div>
 
                     <div class="form-group">
@@ -186,6 +246,23 @@
                                 <input type="date" id="editEndDate" name="EndDate" class="form-control" required />
                                 <div class="invalid-feedback"></div>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Members selection for edit -->
+                    <div class="form-group members-container">
+                        <label for="editMembers">Members</label>
+                        <div class="selected-members" id="editSelectedMembers">
+                            <!-- Members will be added here dynamically -->
+                        </div>
+                        <div class="input-group">
+                            <select id="editMemberSelect" class="form-control">
+                                <option value="">Select members to add...</option>
+                                <!-- Member options will be populated by JavaScript -->
+                            </select>
+                            <button type="button" class="btn btn-outline-primary" id="editAddMemberBtn">
+                                <i class="fas fa-plus"></i>
+                            </button>
                         </div>
                     </div>
 
@@ -234,6 +311,37 @@
                     <input type="hidden" id="deleteId" name="id" />
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Member Modal -->
+<div class="modal fade" id="addMemberModal" tabindex="-1" aria-labelledby="addMemberModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addMemberModalLabel">Add Members</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addMemberForm" asp-action="AddMember" method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" id="projectId" name="ProjectId" />
+
+                    <div class="form-group">
+                        <label for="memberSelectModal">Select Members</label>
+                        <select id="memberSelectModal" name="UserId" class="form-control" required>
+                            <option value="">Select a member...</option>
+                            <!-- Member options will be populated by JavaScript -->
+                        </select>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
                 </form>
             </div>
         </div>

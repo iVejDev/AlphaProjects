@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ProjectManagement.Models;
 using ProjectManagement.Services;
-using System.Security.Claims;
 
 namespace ProjectManagement.Controllers
 {
@@ -34,9 +34,11 @@ namespace ProjectManagement.Controllers
                 case "started":
                     projects = await _projectService.GetProjectsByStatusAsync(userId, ProjectStatus.Started);
                     break;
+
                 case "completed":
                     projects = await _projectService.GetProjectsByStatusAsync(userId, ProjectStatus.Completed);
                     break;
+
                 default:
                     projects = await _projectService.GetAllProjectsAsync(userId);
                     break;
